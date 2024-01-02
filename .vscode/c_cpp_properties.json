@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/lib/libopencm3/include",
+                "/lib/arm-none-eabi/include",
+                "/lib/gcc/arm-none-eabi/10.3.1/include",
+                "/lib/gcc/arm-none-eabi/10.3.1/include-fixed"
+            ],
+            "defines": [
+                "STM32F4",
+                "__ARM_ARCH_7EM__"
+            ],
+            "intelliSenseMode": "gcc-arm",
+            "cStandard": "c99",
+            "cppStandard": "c++20",
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/lib/libopencm3/include",
+                    "/lib/arm-none-eabi/include",
+                    "/lib/gcc/arm-none-eabi/10.3.1/include",
+                    "/lib/gcc/arm-none-eabi/10.3.1/include-fixed"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db"
+            }
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "cmsis_os.h": "c",
+        "flash.h": "c"
+    },
+    "cortex-debug.gdbPath": "/usr/bin/arm-none-eabi-gdb",
+    "cortex-debug.stutilPath": "/usr/bin/st-util",
+    "cortex-debug.openocdPath": "/usr/local/bin/openocd",
+    "cmake.configureOnOpen": false,
+    "editor.rulers": [
+        120
+    ],
+    "editor.formatOnSave": true,
+    "workbench.colorCustomizations": {}
+}

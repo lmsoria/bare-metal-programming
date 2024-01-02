@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build all",
+            "group": "build",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "bin",
+                "-j8"
+            ],
+            "options": {
+                "cwd": "app"
+            }
+        },
+        {
+            "label": "Clean",
+            "group": "build",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "clean"
+            ]
+        },
+        {
+            "label": "Flash",
+            "group": "build",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-j8",
+                "flash-st"
+            ],
+            "options": {
+                "cwd": "app"
+            }
+        }
+    ]
+}
