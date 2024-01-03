@@ -2,7 +2,11 @@
     "files.associations": {
         "main.h": "c",
         "cmsis_os.h": "c",
-        "flash.h": "c"
+        "flash.h": "c",
+        "gpio.h": "c",
+        "systick.h": "c",
+        "vector.h": "c",
+        "nvic.h": "c"
     },
     "cortex-debug.gdbPath": "/usr/bin/arm-none-eabi-gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",
