@@ -7,7 +7,8 @@
         "systick.h": "c",
         "vector.h": "c",
         "nvic.h": "c",
-        "scb.h": "c"
+        "scb.h": "c",
+        "rcc.h": "c"
     },
     "cortex-debug.gdbPath": "/usr/bin/arm-none-eabi-gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",
@@ -16,6 +17,6 @@
     "editor.rulers": [
         120
     ],
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "workbench.colorCustomizations": {}
 }
