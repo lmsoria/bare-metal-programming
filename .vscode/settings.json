@@ -6,7 +6,8 @@
         "gpio.h": "c",
         "systick.h": "c",
         "vector.h": "c",
-        "nvic.h": "c"
+        "nvic.h": "c",
+        "scb.h": "c"
     },
     "cortex-debug.gdbPath": "/usr/bin/arm-none-eabi-gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",

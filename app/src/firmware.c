@@ -1,11 +1,19 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
+#include <libopencm3/cm3/scb.h>
 
 #include "core/system.h"
 #include "core/timer.h"
 
+#define BOOTLOADER_SIZE (0x8000)
+
 #define LED_PORT (GPIOB)
 #define LED_PIN  (GPIO0)
+
+static void vector_setup(void)
+{
+    SCB_VTOR = BOOTLOADER_SIZE;
+}
 
 static void gpio_setup(void)
 {
@@ -16,6 +24,7 @@ static void gpio_setup(void)
 
 int main(void)
 {
+    vector_setup();
     system_setup();
     gpio_setup();
     timer_setup();
@@ -27,7 +36,7 @@ int main(void)
     timer_pwm_set_duty_cycle(duty_cycle);
 
     while(1) {
-        if(system_get_ticks() - start_time >= 20) {
+        if(system_get_ticks() - start_time >= 10) {
             // gpio_toggle(LED_PORT, LED_PIN);
             duty_cycle += 1.0f;
             if(duty_cycle > 100.0f) { duty_cycle = 0.0f; }
