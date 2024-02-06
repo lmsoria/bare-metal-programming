@@ -1,7 +1,7 @@
 #include <libopencm3/stm32/timer.h>
 #include <libopencm3/stm32/rcc.h>
 
-#include "core/timer.h"
+#include "timer.h"
 
 // 96.000.000
 // freq = system_freq / ( (prescaler-1) * (arr-1) )
