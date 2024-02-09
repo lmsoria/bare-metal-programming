@@ -8,7 +8,9 @@
         "vector.h": "c",
         "nvic.h": "c",
         "scb.h": "c",
-        "rcc.h": "c"
+        "rcc.h": "c",
+        "comms.h": "c",
+        "common-defines.h": "c"
     },
     "cortex-debug.gdbPath": "/usr/bin/arm-none-eabi-gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",
