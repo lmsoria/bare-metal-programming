@@ -5,6 +5,7 @@
 
 #include <core/system.h>
 #include <core/uart.h>
+#include "bl_flash.h"
 #include "comms.h"
 #include "common-defines.h"
 
@@ -21,34 +22,34 @@ static void jump_to_main_firmware(void);
 int main(void)
 {
     system_setup();
-    gpio_setup();
-    uart_setup();
-    comms_setup();
+    // gpio_setup();
+    // uart_setup();
+    // comms_setup();
 
-    comms_packet_t packet =
-    {
-        .lenght = 9,
-        .data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff },
-        .crc = 0
-    };
 
-    packet.crc = comms_compute_crc(&packet);
-    // packet.crc++;
+    uint8_t data[1024] = {0};
+    for(uint16_t i = 0; i < 1024; i++) {
+        data[i] = i & 0xFF;
+    }
 
-    comms_packet_t rx_packet;
+    bl_flash_erase_main_application();
+    bl_flash_write(0x08008000, data, 1024);
+    bl_flash_write(0x0800C000, data, 1024);
+    bl_flash_write(0x08010000, data, 1024);
+    bl_flash_write(0x08020000, data, 1024);
+    bl_flash_write(0x08040000, data, 1024);
+    bl_flash_write(0x08060000, data, 1024);
+    bl_flash_write(0x08080000, data, 1024);
+    bl_flash_write(0x080A0000, data, 1024);
+    bl_flash_write(0x080C0000, data, 1024);
+    bl_flash_write(0x080E0000, data, 1024);
+    bl_flash_write(0x08100000, data, 1024);
+    bl_flash_write(0x08120000, data, 1024);
+    bl_flash_write(0x08140000, data, 1024);
+    bl_flash_write(0x08160000, data, 1024);
 
     while (true) {
-        comms_update();
 
-        if(comms_packet_available()) {
-            comms_read(&rx_packet);
-            volatile int x = 0;
-            x++;
-        }
-
-        comms_write(&packet);
-
-        system_delay(2000);
     }
 
     // TODO: Teardown
