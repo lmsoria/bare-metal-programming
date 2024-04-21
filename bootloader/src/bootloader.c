@@ -3,6 +3,7 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 
+#include <core/simple_timer.h>
 #include <core/system.h>
 #include <core/uart.h>
 #include "bl_flash.h"
@@ -26,29 +27,15 @@ int main(void)
     // uart_setup();
     // comms_setup();
 
-
-    uint8_t data[1024] = {0};
-    for(uint16_t i = 0; i < 1024; i++) {
-        data[i] = i & 0xFF;
-    }
-
-    bl_flash_erase_main_application();
-    bl_flash_write(0x08008000, data, 1024);
-    bl_flash_write(0x0800C000, data, 1024);
-    bl_flash_write(0x08010000, data, 1024);
-    bl_flash_write(0x08020000, data, 1024);
-    bl_flash_write(0x08040000, data, 1024);
-    bl_flash_write(0x08060000, data, 1024);
-    bl_flash_write(0x08080000, data, 1024);
-    bl_flash_write(0x080A0000, data, 1024);
-    bl_flash_write(0x080C0000, data, 1024);
-    bl_flash_write(0x080E0000, data, 1024);
-    bl_flash_write(0x08100000, data, 1024);
-    bl_flash_write(0x08120000, data, 1024);
-    bl_flash_write(0x08140000, data, 1024);
-    bl_flash_write(0x08160000, data, 1024);
+    simple_timer_t timer;
+    simple_timer_setup(&timer, 1000, true);
 
     while (true) {
+
+        if(simple_timer_has_elaped(&timer)) {
+            volatile int x = 0;
+            x++;
+        }
 
     }
 

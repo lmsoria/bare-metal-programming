@@ -61,6 +61,7 @@ OBJS		+= $(SRC_DIR)/bl_flash.o
 OBJS		+= $(SRC_DIR)/comms.o
 OBJS		+= $(SHARED_SRC_DIR)/core/crc8.o
 OBJS		+= $(SHARED_SRC_DIR)/core/ring_buffer.o
+OBJS		+= $(SHARED_SRC_DIR)/core/simple_timer.o
 OBJS		+= $(SHARED_SRC_DIR)/core/system.o
 OBJS		+= $(SHARED_SRC_DIR)/core/uart.o
 
