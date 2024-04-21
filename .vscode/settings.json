@@ -10,7 +10,8 @@
         "scb.h": "c",
         "rcc.h": "c",
         "comms.h": "c",
-        "common-defines.h": "c"
+        "common-defines.h": "c",
+        "gpio_common_f24.h": "c"
     },
     "cortex-debug.gdbPath": "/usr/bin/arm-none-eabi-gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",

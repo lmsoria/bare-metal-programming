@@ -1,0 +1,83 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "projectName": "f413-project-cmake",
+    "configurations": [
+        {
+            "name": "STLink Debug Bootloader (openOCD)",
+            "cwd": "${workspaceFolder}/bootloader",
+            "executable": "./bootloader.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "showDevDebugOutput": "raw",
+            "device": "STM32F413ZH",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "",
+            "svdFile": "/home/lsoria/projects/stm32/cmsis-svd/cmsis-svd-data/data/STMicro/STM32F413.svd",
+            "configFiles": [
+                "/usr/local/share/openocd/scripts/interface/stlink.cfg",
+                "/usr/local/share/openocd/scripts/target/stm32f4x.cfg"
+            ],
+        },
+        {
+            "name": "STLink Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/firmware-f413zh.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "stutil",
+            "device": "STM32F413ZH",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "Build all",
+            "svdFile": "/home/lsoria/projects/stm32/cmsis-svd/cmsis-svd-data/data/STMicro/STM32F413.svd",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 96000000,
+                "swoFrequency": 4000000,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "label": "ITM port 0 output",
+                        "type": "console",
+                        "port": 0,
+                        "showOnStartup": true,
+                        "encoding": "ascii"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "STLink Attach",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/firmware-f413zh.elf",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "stutil",
+            "device": "STM32F413ZH",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "Build all",
+            "svdFile": "/home/lsoria/projects/stm32/cmsis-svd/cmsis-svd-data/data/STMicro/STM32F413.svd",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 96000000,
+                "swoFrequency": 4000000,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "label": "ITM port 0 output",
+                        "type": "console",
+                        "port": 0,
+                        "showOnStartup": true,
+                        "encoding": "ascii"
+                    }
+                ]
+            }
+        }
+    ]
+}
