@@ -94,7 +94,11 @@ void comms_update(void)
 
 bool comms_packet_available(void) { return (packet_read_index != packet_write_index); }
 
-void comms_write(comms_packet_t* packet) { uart_write((uint8_t*)(packet), PACKET_LENGHT); }
+void comms_write(comms_packet_t* packet)
+{
+    uart_write((uint8_t*)(packet), PACKET_LENGHT);
+    comms_packet_memcpy(packet, &last_transmitted_packet);
+}
 
 void comms_read(comms_packet_t* packet)
 {
