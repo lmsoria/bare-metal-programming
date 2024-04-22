@@ -42,6 +42,14 @@ void uart_setup(void)
     usart_enable(USART3);
 }
 
+void uart_deinit(void)
+{
+    usart_disable_rx_interrupt(USART3);
+    nvic_disable_irq(NVIC_USART3_IRQ);
+    usart_disable(USART3);
+    rcc_periph_clock_disable(RCC_USART3);
+}
+
 void uart_write(uint8_t* data, const uint32_t length)
 {
     for(uint32_t i = 0; i < length; i++) {

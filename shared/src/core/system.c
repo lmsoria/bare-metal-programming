@@ -18,6 +18,12 @@ static void systick_setup(void)
     systick_interrupt_enable();
 }
 
+void system_deinit(void)
+{
+    systick_interrupt_disable();
+    systick_counter_disable();
+    systick_clear();
+}
 
 void sys_tick_handler(void)
 {

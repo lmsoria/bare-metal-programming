@@ -1,6 +1,9 @@
 #include <assert.h>
+#include <string.h>
+
 #include "core/crc8.h"
 #include "core/uart.h"
+
 #include "comms.h"
 
 #define PACKET_BUFFER_LENGTH (8U)
@@ -11,12 +14,8 @@ typedef enum comms_state_e {
     COMMS_STATE_CRC,
 } comms_state_e;
 
-static bool comms_is_single_byte_packet(const comms_packet_t* packet, const uint8_t byte);
-static void comms_packet_memcpy(const comms_packet_t* src, comms_packet_t* dest);
-
 static comms_state_e state = COMMS_STATE_LENGHT;
 static uint8_t data_bytes_received = 0;
-
 
 static comms_packet_t temporary_packet = {.lenght = 0, .data = {0}, .crc = 0 };
 static comms_packet_t last_transmitted_packet = {.lenght = 0, .data = {0}, .crc = 0 };
@@ -30,11 +29,8 @@ static uint32_t packet_buffer_mask = PACKET_BUFFER_LENGTH - 1;
 
 void comms_setup(void)
 {
-    retx_packet.data[0] = PACKET_RETX_DATA0;
-    retx_packet.crc = comms_compute_crc(&retx_packet);
-
-    ack_packet.data[0] = PACKET_ACK_DATA0;
-    ack_packet.crc = comms_compute_crc(&ack_packet);
+    comms_create_single_byte_packet(&retx_packet, PACKET_RETX_DATA0);
+    comms_create_single_byte_packet(&ack_packet, PACKET_ACK_DATA0);
 }
 
 void comms_update(void)
@@ -79,7 +75,7 @@ void comms_update(void)
             uint32_t next_write_index = (packet_write_index + 1) & packet_buffer_mask;
             assert(next_write_index != packet_read_index);
 
-            comms_packet_memcpy(&temporary_packet, &packet_buffer[packet_write_index]);
+            memcpy(&packet_buffer[packet_write_index], &temporary_packet, sizeof(comms_packet_t));
             packet_write_index = next_write_index;
             comms_write(&ack_packet);
             state = COMMS_STATE_LENGHT;
@@ -97,18 +93,27 @@ bool comms_packet_available(void) { return (packet_read_index != packet_write_in
 void comms_write(comms_packet_t* packet)
 {
     uart_write((uint8_t*)(packet), PACKET_LENGHT);
-    comms_packet_memcpy(packet, &last_transmitted_packet);
+    memcpy(&last_transmitted_packet, packet, sizeof(comms_packet_t));
 }
 
 void comms_read(comms_packet_t* packet)
 {
-    comms_packet_memcpy(&packet_buffer[packet_read_index], packet);
+    memcpy(packet, &packet_buffer[packet_read_index], sizeof(comms_packet_t));
     packet_read_index = (packet_read_index + 1) & packet_buffer_mask;
 }
 
 uint8_t comms_compute_crc(comms_packet_t* packet) { return crc8((uint8_t*)(packet), PACKET_LENGHT - PACKET_CRC_BYTES); }
 
-static bool comms_is_single_byte_packet(const comms_packet_t* packet, const uint8_t byte)
+
+void comms_create_single_byte_packet(comms_packet_t* packet, const uint8_t byte)
+{
+    memset(packet, 0xFF, sizeof(comms_packet_t));
+    packet->lenght = 1;
+    packet->data[0] = byte;
+    packet->crc = comms_compute_crc(packet);
+}
+
+bool comms_is_single_byte_packet(const comms_packet_t* packet, const uint8_t byte)
 {
     if(packet->lenght != 1) {
         return false;
@@ -125,15 +130,4 @@ static bool comms_is_single_byte_packet(const comms_packet_t* packet, const uint
     }
 
     return true;
-}
-
-static void comms_packet_memcpy(const comms_packet_t* src, comms_packet_t* dest)
-{
-    dest->lenght = src->lenght;
-
-    for(uint8_t i = 0; i < PACKET_DATA_LENGHT; i++) {
-        dest->data[i] = src->data[i];
-    }
-
-    dest->crc = src->crc;
 }
